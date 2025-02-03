@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta de Disculpa</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-950 text-white flex flex-col items-center justify-center h-screen">
+
+  <!-- Introducción y botón para mostrar la carta -->
+  <div class="mb-4 text-center">
+    <h1 class="text-2xl font-bold">Carta de Disculpa</h1>
+    <p class="mt-2 mx-10">
+        Hola Abi, <br>
+        Se que vivimos peleando y todo pero aunque pasemos peleando mucho y todo no quita el hecho de que usted no me quiera y que yo la quiera a usted 😼 al final y al cabo siempre solucionamos todo ya que somos mejores amigos, te quiero mucho y porfa báñate
+    </p>
+  </div>
+  <button onclick="mostrarCarta()" class="bg-blue-600 p-3 rounded-xl">
+    Mostrar Carta
+  </button>
+
+  <!-- Modal de la carta (inicialmente oculto) -->
+  <div id="carta" class="hidden absolute inset-0 bg-blue-700 flex items-center justify-center">
+    <!-- Contenedor padre con posición relative y dimensiones fijas -->
+    <div class="bg-blue-900 border p-4 rounded-xl relative w-96 h-64">
+      <h2 class="text-xl font-bold text-center mb-4">Abi, ¿aceptas mis disculpas?</h2>
+      <!-- Contenedor de los botones con posición relative -->
+      <div class="relative h-full flex items-center justify-around">
+        <button id="siBtn" class="bg-white text-blue-900 p-3 rounded-xl font-bold">
+          Sí
+        </button>
+        <button id="noBtn" class="bg-white text-blue-900 p-3 rounded-xl font-bold">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Div con mensaje de aceptación (inicialmente oculto) -->
+  <div id="mensaje" class="hidden absolute inset-0 bg-blue-700 flex items-center justify-center">
+    <div class="bg-blue-900 border p-4 rounded-xl">
+      <h2 class="text-xl font-bold text-center">Oohhhh gracias, sabía que me perdonarías</h2>
+    </div>
+  </div>
+
+  <script>
+    // Función para mostrar la carta
+    function mostrarCarta() {
+      const carta = document.getElementById("carta");
+      if (carta) {
+        carta.classList.remove("hidden");
+      }
+    }
+
+    // Función para mover el botón "No" aleatoriamente dentro del contenedor padre
+    function moverNoButton() {
+      const btnNo = document.getElementById("noBtn");
+      if (btnNo) {
+        // Seleccionamos el contenedor padre de los botones (debe tener position: relative)
+        const contenedor = btnNo.parentElement;
+        // Obtenemos dimensiones del contenedor y del botón
+        const contWidth = contenedor.offsetWidth;
+        const contHeight = contenedor.offsetHeight;
+        const btnWidth = btnNo.offsetWidth;
+        const btnHeight = btnNo.offsetHeight;
+        // Calculamos el máximo desplazamiento permitido dentro del contenedor
+        const maxX = contWidth - btnWidth;
+        const maxY = contHeight - btnHeight;
+        // Calculamos coordenadas aleatorias para ambos ejes
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+        // Aseguramos que el botón esté posicionado de forma absoluta respecto a su contenedor
+        btnNo.style.position = "absolute";
+        btnNo.style.left = randomX + "px";
+        btnNo.style.top = randomY + "px";
+      }
+    }
+
+    // Asignamos los eventos para el botón "No" para que se mueva al pasar el mouse o al hacer click
+    const btnNo = document.getElementById("noBtn");
+    if (btnNo) {
+      btnNo.addEventListener("mouseover", moverNoButton);
+      btnNo.addEventListener("click", moverNoButton);
+    }
+
+    // Asignamos el evento para el botón "Sí": ocultar la carta y mostrar el mensaje de aceptación
+    const btnSi = document.getElementById("siBtn");
+    if (btnSi) {
+      btnSi.addEventListener("click", function() {
+        document.getElementById("carta").classList.add("hidden");
+        document.getElementById("mensaje").classList.remove("hidden");
+      });
+    }
+  </script>
+</body>
+</html>
